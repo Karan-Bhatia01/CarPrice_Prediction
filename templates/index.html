@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Price Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+
+<body class="bg-dark">
+<div class="container">
+    <div class="row">
+        <div class="card mt-5 w-100">
+            <div class="card-header text-center">
+                <h1>Welcome to Car Price Predictor</h1>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <h5>Fill in the details below to get an estimated price for your car:</h5>
+                </div>
+                <br>
+
+                <form id="predictionForm">
+                    <div class="form-group">
+                        <label><b>Select the company:</b></label>
+                        <select class="form-control" id="company" name="company" required>
+                            {% for company in companies %}
+                            <option value="{{ company }}">{{ company }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><b>Select the model:</b></label>
+                        <select class="form-control" id="car_models" name="car_models" required>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><b>Select Year of Purchase:</b></label>
+                        <select class="form-control" id="year" name="year" required>
+                            {% for year in years %}
+                            <option value="{{ year }}">{{ year }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><b>Select the Fuel Type:</b></label>
+                        <select class="form-control" id="fuel_type" name="fuel_type" required>
+                            {% for fuel in fuel_types %}
+                            <option value="{{ fuel }}">{{ fuel }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><b>Enter Kilometres Driven:</b></label>
+                        <input type="number" class="form-control" id="kilo_driven" name="kilo_driven"
+                               placeholder="Enter kilometres driven" required min="1">
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Predict Price</button>
+                    </div>
+                </form>
+
+                <div class="text-center">
+                    <h4><span id="prediction"></span></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Load car models dynamically based on selected company
+    document.getElementById("company").addEventListener("change", function () {
+        let company = this.value;
+        let carModelDropdown = document.getElementById("car_models");
+        carModelDropdown.innerHTML = ""; // Clear existing options
+
+        fetch(`/get_models?company=${company}`)
+            .then(response => response.json())
+            .then(models => {
+                models.forEach(model => {
+                    let option = document.createElement("option");
+                    option.value = model;
+                    option.textContent = model;
+                    carModelDropdown.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error fetching car models:", error));
+    });
+
+    // Handle form submission with AJAX
+    document.getElementById("predictionForm").addEventListener("submit", async function (event) {
+        event.preventDefault();  // Prevent normal form submission
+
+        let formData = new FormData(this);
+        document.getElementById("prediction").textContent = "Wait! Predicting Price.....";
+
+        let response = await fetch("/predict", {
+            method: "POST",
+            body: formData
+        });
+
+        let result = await response.text();
+        document.getElementById("prediction").textContent = "Prediction: ₹" + result;
+    });
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

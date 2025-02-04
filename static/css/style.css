@@ -1,0 +1,129 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Background */
+.bg-dark {
+    background-color: #2f3640;
+    color: #2cda12;
+    font-family: Arial, sans-serif;
+    padding: 20px 0;
+}
+
+/* Container for content */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Header and title */
+.card-header {
+    background-color: #3c4a59;
+    color: #cab568;
+    text-align: center;
+    padding: 20px;
+}
+
+.card-header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+/* Card body styling */
+.card-body {
+    background-color: #434b56;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Form Inputs and Buttons */
+.form-control {
+    background-color: #2d353b;
+    color: #514695;
+    border: 1px solid #4c5a64;
+    border-radius: 5px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+.form-control:focus {
+    border-color: #00d8a2;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 216, 162, 0.7);
+}
+
+/* Labels and Select dropdown */
+label {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #f1f1f1;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #00d8a2;
+    border: none;
+    color: #009c74;
+    padding: 12px;
+    font-size: 1.2rem;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #009c74;
+}
+
+/* Prediction Result */
+#prediction {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00d8a2;
+    margin-top: 20px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1rem;
+    color: #bbb;
+}
+
+/* Select Dropdown (For Bootstrap) */
+.selectpicker {
+    background-color: #2d353b;
+    color: orange;
+    border: 1px solid #4c5a64;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+/* Spacing and Responsive Layout */
+.mt-50 {
+    margin-top: 50px;
+}
+
+/* On small screens */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .form-control {
+        padding: 10px;
+    }
+
+    .btn-primary {
+        padding: 10px;
+    }
+}
